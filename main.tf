@@ -1,22 +1,29 @@
-# Install Java 21
-sudo dnf install java-21-amazon-corretto-devel -y
 
-# Verify Java
-java -version
+# Terraform configuration
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 6.0"
+    }
+  }
+}
 
-# Add Jenkins repo
-sudo wget -O /etc/yum.repos.d/jenkins.repo \
-https://pkg.jenkins.io/redhat-stable/jenkins.repo
+# AWS Provider
+provider "aws" {
+  region = "us-east-1"
+}
 
-# Import key
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+# Get AWS account information
+data "aws_caller_identity" "current" {}
 
-# Install Jenkins
-sudo dnf install jenkins -y
+# Display AWS account ID
+output "aws_account_id" {
+  value = data.aws_caller_identity.current.account_id
+}
 
-# Enable + start
-sudo systemctl enable jenkins
-sudo systemctl start jenkins
+# Display AWS user ARN
+output "aws_user_arn" {
+  value = data.aws_caller_identity.current.arn
+}
 
-# Check status
-sudo systemctl status jenkins
