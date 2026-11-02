@@ -28,7 +28,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::381940662662:role/oidc-role
+          role-to-assume: arn:aws:iam::684160548236:role/oidc-role
           aws-region: us-east-1
 
       # Step 3: Verify AWS Identity
